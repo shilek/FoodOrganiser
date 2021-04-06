@@ -13,7 +13,7 @@ import org.w3c.dom.Text;
 @Entity(tableName = "Products")
 public class ProductTable {
 
-    public ProductTable(String name, int protein, int carbohydrates, int fats, String code,@Nullable String pathPhoto)
+    public ProductTable(String name, int protein, int carbohydrates, int fats, String code, @Nullable String pathPhoto)
     {
         this.name = name;
         this.protein = protein;
@@ -21,7 +21,6 @@ public class ProductTable {
         this.fats = fats;
         this.code = code;
         this.pathPhoto = pathPhoto;
-
     }
 
     @PrimaryKey(autoGenerate = true)

@@ -18,7 +18,7 @@
         android:layout_marginEnd="10dp" />
 
     <ListView
-        android:id="@+id/navigationmenu"
+        android:id="@+id/timetableMealsList"
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:layout_below="@+id/calendar"
@@ -32,7 +32,7 @@
     </ListView>
 
     <ListView
-        android:id="@+id/products"
+        android:id="@+id/timetableProductsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/calendar"
@@ -40,7 +40,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_toEndOf="@+id/navigationmenu"
+        android:layout_toEndOf="@+id/timetableMealsList"
         app:layout_constraintStart_toEndOf="parent" />
 
 </RelativeLayout>
