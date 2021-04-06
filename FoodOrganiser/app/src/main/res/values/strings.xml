@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FoodOrganiser</string>
+    <string name="name">Name</string>
+    <string name="fats">Fats</string>
+    <string name="carbohydrates">Carbohydrates</string>
+    <string name="proteins">Proteins</string>
+    <string name="close">Close</string>
+</resources>
