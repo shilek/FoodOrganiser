@@ -13,16 +13,16 @@ import java.util.List;
 @Dao
 public interface ProductDAO {
     @Query("SELECT * FROM Products")
-    LiveData<ProductTable> getAll();
+    LiveData<List<ProductTable>> getAll();
 
     @Query("SELECT * FROM Products WHERE :what LIKE :where")
-    LiveData<ProductTable> getByParameter(String what, String where);
+    LiveData<List<ProductTable>> getByParameter(String what, String where);
 
     @Query("SELECT * FROM Products WHERE :what LIKE :where ORDER BY :sorting")
-    LiveData<ProductTable> getByParameter(String what, String where, String sorting);
+    LiveData<List<ProductTable>> getByParameter(String what, String where, String sorting);
 
     @Query("SELECT * FROM Products WHERE :what LIKE :where ORDER BY :sorting LIMIT :limit")
-    LiveData<ProductTable> getByParameter(String what, String where, String sorting, int limit);
+    LiveData<List<ProductTable>> getByParameter(String what, String where, String sorting, int limit);
 
     @Query("DELETE FROM Products WHERE rowid = :value")
     void delete(int value);

@@ -30,15 +30,15 @@ public class ProductDisplay extends AppCompatActivity implements ProductListener
         recyclerView = findViewById(R.id.productDisplay);
         searchView = findViewById(R.id.search_bar);
 
-        database = Room.databaseBuilder(this, DatabaseClass.class,"AppDatabase")
+        database = Room.databaseBuilder(this,DatabaseClass.class,"AppDatabase")
                 .build();
         dao = database.productDAO();
-//        dao.getAll().observe(this, productTables -> {
-//            list = productTables;
-//            productAdapter = new ProductAdapter(list,this);
-//            recyclerView.setAdapter(productAdapter);
-//            recyclerView.setLayoutManager(layoutManager);
-//        });
+        dao.getAll().observe(this, productTables -> {
+            list = productTables;
+            productAdapter = new ProductAdapter(list,this);
+            recyclerView.setAdapter(productAdapter);
+            recyclerView.setLayoutManager(layoutManager);
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
