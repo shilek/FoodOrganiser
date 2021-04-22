@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">FoodOrganiser</string>
+    <string name="name">Name</string>
+    <string name="fats">Fats</string>
+    <string name="carbohydrates">Carbohydrates</string>
+    <string name="proteins">Proteins</string>
+    <string name="close">Close</string>
+
+    <string name="mealSearch">Search your meals</string>
+    <string name="ingrSearch">Search for ingredient</string>
+    <string name="meal_title">Name your meal</string>
+    <string name="meal_main_ingedient">Name your meal s main ingredient</string>
+    <string name="meal_description">Describe preparation of your meal</string>
+    <string name="ingredients_list">Add ingredients to your meal</string>
+    <string name="ingredients_list_text">Meal s ingredients list:</string>
+    <string name="sampleValue">999</string>
+    <string name="carbohydratesValue">Carbohydrates (g)</string>
+    <string name="proteinValue">Proteins (g)</string>
+    <string name="fatValue">Fats (g)</string>
+</resources>
