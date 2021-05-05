@@ -3,9 +3,11 @@ package com.app.foodorganiser;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import com.app.foodorganiser.entity.ProductTable;
 import com.app.foodorganiser.productpackage.DatabaseClass;
+import com.app.foodorganiser.productpackage.ProductDisplay;
 import com.app.foodorganiser.productpackage.QueryBuilder;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static List<ProductTable> allProductsList;
+    Button products, timetable, meals, account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,29 @@ public class MainActivity extends AppCompatActivity {
             allProductsList = ProductTable.toObject(list);
         }).start();
 
+        products = findViewById(R.id.ProductsButton);
+        timetable = findViewById(R.id.TimetableButton);
+        meals = findViewById(R.id.MealsButton);
+        account = findViewById(R.id.AccountButton);
 
-       startActivity(new Intent(this, Meals.class));
+        products.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ProductDisplay.class);
+            startActivity(intent);
+        });
+
+        timetable.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TimetableActivity.class);
+            startActivity(intent);
+        });
+
+        meals.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MealsActivity.class);
+            startActivity(intent);
+        });
+
+        account.setOnClickListener(v -> {
+//            Intent intent = new Intent(this, ProductDisplay.class);
+//            startActivity(intent);
+        });
     }
 }

@@ -29,15 +29,6 @@ public class ProductDisplay extends AppCompatActivity implements ProductListener
         recyclerView = findViewById(R.id.productDisplay);
         searchView = findViewById(R.id.search_bar);
 
-//        database = Room.databaseBuilder(this,DatabaseClass.class,"AppDatabase")
-//                .build();
-//        dao = database.productDAO();
-//        dao.getAll().observe(this, productTables -> {
-//            list = productTables;
-//            productAdapter = new ProductAdapter(list,this);
-//            recyclerView.setAdapter(productAdapter);
-//            recyclerView.setLayoutManager(layoutManager);
-//        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -60,9 +51,9 @@ public class ProductDisplay extends AppCompatActivity implements ProductListener
         bundle.putString("name",list.get(position).getName());
         bundle.putString("code",list.get(position).getCode());
         bundle.putString("pathPhoto",list.get(position).getPathPhoto());
-        bundle.putInt("protein",list.get(position).getProtein());
-        bundle.putInt("carbohydrates",list.get(position).getCarbohydrates());
-        bundle.putInt("fats",list.get(position).getFats());
+        bundle.putDouble("protein",list.get(position).getProtein());
+        bundle.putDouble("carbohydrates",list.get(position).getCarbohydrates());
+        bundle.putDouble("fats",list.get(position).getFats());
 
         ProductDescribes productDescribes = new ProductDescribes();
         productDescribes.setArguments(bundle);

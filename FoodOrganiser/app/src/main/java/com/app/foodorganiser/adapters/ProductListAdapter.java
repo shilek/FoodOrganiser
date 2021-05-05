@@ -7,10 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.app.foodorganiser.CreateMeal;
 import com.app.foodorganiser.R;
 import com.app.foodorganiser.TimetableActivity;
 import com.app.foodorganiser.entity.ProductTable;
+
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +26,13 @@ public class ProductListAdapter extends BaseAdapter implements Filterable {
     List<ProductTable> products;
     ContactFilter mFilter = new ContactFilter();
     String filterString = new String();
+    String meal;
 
-    public ProductListAdapter(Context context, List<ProductTable> products) {
+
+    public ProductListAdapter(Context context, List<ProductTable> products, String meal) {
         this.context = context;
         this.products = products;
+        this.meal = meal;
     }
 
     @Override
@@ -51,6 +60,7 @@ public class ProductListAdapter extends BaseAdapter implements Filterable {
         TextView protein;
         TextView carbohydrates;
         TextView fats;
+        ImageView delete;
     }
 
     @Override
@@ -64,11 +74,47 @@ public class ProductListAdapter extends BaseAdapter implements Filterable {
         holder.protein = convertView.findViewById(R.id.productProteinTimetable);
         holder.carbohydrates = convertView.findViewById(R.id.productCarboTimetable);
         holder.fats = convertView.findViewById(R.id.productFatsTimetable);
-
+        holder.delete = convertView.findViewById(R.id.deleteIngredientTimetable);
+        holder.delete.setImageResource(R.drawable.ic_baseline_close_24);
         holder.name.setText(products.get(position).getName());
         holder.protein.setText("Protein: "+String.valueOf(products.get(position).getProtein()));
         holder.carbohydrates.setText("Carbo: "+String.valueOf(products.get(position).getCarbohydrates()));
-        holder.fats.setText(String.valueOf("Fats: "+products.get(position).getFats()));
+        holder.fats.setText("Fats: "+products.get(position).getFats());
+        if(meal.equals("breakfast"))
+        holder.delete.setOnClickListener(v -> {
+            TimetableActivity.breakfast.remove(position);
+            notifyDataSetChanged();
+            TimetableActivity.countMacros(TimetableActivity.breakfast);
+            TimetableActivity.setMacroText();
+        });
+        if(meal.equals("breakfast2"))
+            holder.delete.setOnClickListener(v -> {
+                TimetableActivity.breakfast2.remove(position);
+                notifyDataSetChanged();
+                TimetableActivity.countMacros(TimetableActivity.breakfast2);
+                TimetableActivity.setMacroText();
+            });
+        if(meal.equals("lunch"))
+            holder.delete.setOnClickListener(v -> {
+                TimetableActivity.lunch.remove(position);
+                notifyDataSetChanged();
+                TimetableActivity.countMacros(TimetableActivity.lunch);
+                TimetableActivity.setMacroText();
+            });
+        if(meal.equals("dinner"))
+            holder.delete.setOnClickListener(v -> {
+                TimetableActivity.dinner.remove(position);
+                notifyDataSetChanged();
+                TimetableActivity.countMacros(TimetableActivity.dinner);
+                TimetableActivity.setMacroText();
+            });
+        if(meal.equals("supper"))
+            holder.delete.setOnClickListener(v -> {
+                TimetableActivity.supper.remove(position);
+                notifyDataSetChanged();
+                TimetableActivity.countMacros(TimetableActivity.supper);
+                TimetableActivity.setMacroText();
+            });
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +151,7 @@ public class ProductListAdapter extends BaseAdapter implements Filterable {
         protected void publishResults(CharSequence constraint, FilterResults results) {
             products = (ArrayList<ProductTable>) results.values;
             notifyDataSetChanged();
+
         }
 
     }

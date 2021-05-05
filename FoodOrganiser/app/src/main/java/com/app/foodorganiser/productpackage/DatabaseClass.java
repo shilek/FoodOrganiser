@@ -28,7 +28,7 @@ public class DatabaseClass {
 
     //TODO: placeholder
     public DatabaseClass() {
-        DATABASE = "http://192.168.18.2/projectAndroid/web/index.php"; //put in your local IP
+        DATABASE = "http://192.168.0.165/projectAndroid/web/index.php"; //put in your local IP
         USER = "root";
         PASS = "";
     }

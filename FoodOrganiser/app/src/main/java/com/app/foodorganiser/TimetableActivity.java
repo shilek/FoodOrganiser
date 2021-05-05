@@ -3,13 +3,17 @@ package com.app.foodorganiser;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -23,16 +27,21 @@ import com.google.gson.reflect.TypeToken;
 public class TimetableActivity extends AppCompatActivity {
 
     private String[] meals = new String[]{"Breakfast", "2nd breakfast", "Lunch", "Supper", "Dinner"};
-    private List<ProductTable> breakfast = new ArrayList<>();
-    private List<ProductTable> breakfast2 = new ArrayList<>();
-    private List<ProductTable> lunch = new ArrayList<>();
-    private List<ProductTable> supper = new ArrayList<>();
-    private List<ProductTable> dinner = new ArrayList<>();
-
+    static public List<ProductTable> breakfast = new ArrayList<>();
+    static public List<ProductTable> breakfast2 = new ArrayList<>();
+    static public List<ProductTable> lunch = new ArrayList<>();
+    static public List<ProductTable> supper = new ArrayList<>();
+    static public List<ProductTable> dinner = new ArrayList<>();
+    private String date;
+    boolean menuLoaded;
+    String selectedMeal;
+    Button addIngredientButton;
     ArrayAdapter<String> mealsListAdapter;
-    ProductListAdapter productsListAdapter;
+    public static ProductListAdapter productsListAdapter;
     ListView mealList;
     ListView productList;
+    static TextView macroInfo;
+    static List<Double> countedMacros = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +49,30 @@ public class TimetableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timetable);
         mealList = findViewById(R.id.timetableMealsList);
         productList = findViewById(R.id.timetableProductsList);
+        addIngredientButton = findViewById(R.id.addIngredientTimetable);
+        addIngredientButton.setVisibility(View.GONE);
+        macroInfo = findViewById(R.id.macroInfo);
         mealsListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, meals);
         //kalendarz do klikania
         CalendarView calendarView=(CalendarView) findViewById(R.id.calendar);
+        menuLoaded = false;
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                String date = dayOfMonth + "." + month + "." + year;
+                if(menuLoaded && date != dayOfMonth + "." + month + "." + year) saveMenu(date);
+                addIngredientButton.setVisibility(View.VISIBLE);
+                date = dayOfMonth + "." + month + "." + year;
                 loadMenu(date);
+                menuLoaded = true;
                 mealList.setAdapter(mealsListAdapter);
-                productList.setAdapter(null);
-//                breakfast.add(new ProductTable("milk", 20, 0, 3, "123milk", null));
-//                breakfast.add(new ProductTable("yoghurt", 10, 7, 5, "123yogh", null));
-//                lunch.add(new ProductTable("peanut butter", 10, 30, 100, "peanut123", null));
+                selectedMeal = "breakfast";
+                productsListAdapter = new ProductListAdapter(getApplicationContext(), breakfast, "breakfast");
+                productList.setAdapter(productsListAdapter);
+                countMacros(breakfast);
+                setMacroText();
+//                breakfast.add(new ProductTable(3, "milk", 20, 0, 3, "123milk", null));
+//                breakfast.add(new ProductTable(4,"yoghurt", 10, 7, 5, "123yogh", null));
+//                lunch.add(new ProductTable(5, "peanut butter", 10, 30, 100, "peanut123", null));
 //                saveMenu(date);
 //                Toast.makeText(getApplicationContext(), breakfast.get(0).getName(), Toast.LENGTH_SHORT).show();// TODO Auto-generated method stub
             }
@@ -64,28 +84,50 @@ public class TimetableActivity extends AppCompatActivity {
         mealList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0){
-                    productsListAdapter = new ProductListAdapter(getApplicationContext(), breakfast);
+                    selectedMeal = "breakfast";
+                    productsListAdapter = new ProductListAdapter(getApplicationContext(), breakfast, "breakfast");
                     productList.setAdapter(productsListAdapter);
+                    countMacros(breakfast);
+                    setMacroText();
                 }
                 if (position == 1){
-                    productsListAdapter = new ProductListAdapter(getApplicationContext(), breakfast2);
+                    selectedMeal = "breakfast2";
+                    productsListAdapter = new ProductListAdapter(getApplicationContext(), breakfast2, "breakfast2");
                     productList.setAdapter(productsListAdapter);
+                    countMacros(breakfast2);
+                    setMacroText();
                 }
                 if (position == 2){
-                    productsListAdapter = new ProductListAdapter(getApplicationContext(), lunch);
+                    selectedMeal = "lunch";
+                    productsListAdapter = new ProductListAdapter(getApplicationContext(), lunch, "lunch");
                     productList.setAdapter(productsListAdapter);
+                    countMacros(lunch);
+                    setMacroText();
                 }
                 if (position == 3){
-                    productsListAdapter = new ProductListAdapter(getApplicationContext(), supper);
+                    selectedMeal = "supper";
+                    productsListAdapter = new ProductListAdapter(getApplicationContext(), supper, "supper");
                     productList.setAdapter(productsListAdapter);
+                    countMacros(supper);
+                    setMacroText();
                 }
                 if (position == 4){
-                    productsListAdapter = new ProductListAdapter(getApplicationContext(), dinner);
+                    selectedMeal = "dinner";
+                    productsListAdapter = new ProductListAdapter(getApplicationContext(), dinner, "dinner");
                     productList.setAdapter(productsListAdapter);
+                    countMacros(dinner);
+                    setMacroText();
                 }
             }
         });
 
+
+        addIngredientButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PickIngredient.class);
+            intent.putExtra("action", "addToTimetable");
+            intent.putExtra("selectedMeal", selectedMeal);
+            startActivity(intent);
+        });
 
     }
 
@@ -138,5 +180,28 @@ public class TimetableActivity extends AppCompatActivity {
         prefsEditor.putString("dinner", json);
 
         prefsEditor.commit();
+    }
+
+    static public void countMacros(List<ProductTable> list){
+        double carbo = 0, protein = 0, fats = 0;
+        if(list.size() > 0)
+        for(int i=0; i < list.size(); i++){
+            carbo += list.get(i).getCarbohydrates();
+            protein += list.get(i).getProtein();
+            fats += list.get(i).getFats();
+        }
+        countedMacros.clear();
+        countedMacros.add(protein);
+        countedMacros.add(carbo);
+        countedMacros.add(fats);
+    }
+
+    static public void setMacroText(){
+        macroInfo.setText("Protein: "+countedMacros.get(0)+"  Carbo: "+countedMacros.get(1)+"  Fats: "+countedMacros.get(2));
+    }
+    @Override
+    public void onBackPressed() {
+        if(menuLoaded) saveMenu(date);
+        finish();
     }
 }

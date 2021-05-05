@@ -19,9 +19,9 @@ public class ProductTable {
 
     private int id;
     private String name;
-    private int protein;
-    private int carbohydrates;
-    private int fats;
+    private double protein;
+    private double carbohydrates;
+    private double fats;
     private String code;
     @Nullable
     private String pathPhoto;
@@ -88,15 +88,15 @@ public class ProductTable {
         return id;
     }
 
-    public int getCarbohydrates() {
+    public double getCarbohydrates() {
         return carbohydrates;
     }
 
-    public int getFats() {
+    public double getFats() {
         return fats;
     }
 
-    public int getProtein() {
+    public double getProtein() {
         return protein;
     }
 

@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CreateMeal extends AppCompatActivity {
@@ -108,6 +107,7 @@ public class CreateMeal extends AppCompatActivity {
 
         addIngrBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, PickIngredient.class);
+            intent.putExtra("action", "addToMeal");
             startActivity(intent);
         });
 
@@ -134,7 +134,7 @@ public class CreateMeal extends AppCompatActivity {
                 saveMeals();
                 Toast.makeText(this, "Meal saved!", Toast.LENGTH_SHORT).show();
                 mealProductsList.clear();
-                Intent intent = new Intent(this, Meals.class);
+                Intent intent = new Intent(this, MealsActivity.class);
                 startActivity(intent);
                 //finish();
             }
@@ -149,7 +149,7 @@ public class CreateMeal extends AppCompatActivity {
 
             Toast.makeText(this, "Meal deleted!", Toast.LENGTH_SHORT).show();
             mealProductsList.clear();
-            Intent intent = new Intent(this, Meals.class);
+            Intent intent = new Intent(this, MealsActivity.class);
             startActivity(intent);
         });
 
@@ -219,7 +219,7 @@ public class CreateMeal extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         mealProductsList.clear();
-        Intent intent = new Intent(this, Meals.class);
+        Intent intent = new Intent(this, MealsActivity.class);
         startActivity(intent);
         //finish();
     }

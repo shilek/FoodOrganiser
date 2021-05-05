@@ -10,6 +10,8 @@ import android.widget.SearchView;
 
 import com.app.foodorganiser.entity.ProductTable;
 
+import java.sql.Time;
+
 public class PickIngredient extends AppCompatActivity {
 
     ArrayAdapter<ProductTable> ptArrayAdapter;
@@ -24,11 +26,41 @@ public class PickIngredient extends AppCompatActivity {
         ptArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, MainActivity.allProductsList);
         ingrs.setAdapter(ptArrayAdapter);
 
-        //Adding ingredient to meal list on click
-        ingrs.setOnItemClickListener((parent, view, position, id) -> {
-            CreateMeal.mealProductsList.add(MainActivity.allProductsList.get(position));
-            finish();
-        });
+        if (getIntent().getStringExtra("action").equals("addToMeal")) {
+            //Adding ingredient to meal list on click
+            ingrs.setOnItemClickListener((parent, view, position, id) -> {
+                CreateMeal.mealProductsList.add(MainActivity.allProductsList.get(position));
+                finish();
+            });
+        }
+
+        if (getIntent().getStringExtra("action").equals("addToTimetable")){
+            ingrs.setOnItemClickListener((parent, view, position, id) -> {
+                if(getIntent().getStringExtra("selectedMeal").equals("breakfast")) {
+                    TimetableActivity.breakfast.add(MainActivity.allProductsList.get(position));
+                    TimetableActivity.countMacros(TimetableActivity.breakfast);
+                }
+                if(getIntent().getStringExtra("selectedMeal").equals("breakfast2")) {
+                    TimetableActivity.breakfast2.add(MainActivity.allProductsList.get(position));
+                    TimetableActivity.countMacros(TimetableActivity.breakfast2);
+                }
+                if(getIntent().getStringExtra("selectedMeal").equals("lunch")) {
+                    TimetableActivity.lunch.add(MainActivity.allProductsList.get(position));
+                    TimetableActivity.countMacros(TimetableActivity.lunch);
+                }
+                if(getIntent().getStringExtra("selectedMeal").equals("supper")) {
+                    TimetableActivity.supper.add(MainActivity.allProductsList.get(position));
+                    TimetableActivity.countMacros(TimetableActivity.supper);
+                }
+                if(getIntent().getStringExtra("selectedMeal").equals("dinner")) {
+                    TimetableActivity.dinner.add(MainActivity.allProductsList.get(position));
+                    TimetableActivity.countMacros(TimetableActivity.dinner);
+                }
+                TimetableActivity.setMacroText();
+                finish();
+                TimetableActivity.productsListAdapter.notifyDataSetChanged();
+            });
+        }
 
         // Method responsible for search view
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
