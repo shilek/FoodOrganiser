@@ -6,13 +6,80 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/ProductsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toEndOf="@+id/timetableMealsList"
+        android:backgroundTint="@color/ltorange"
+        android:drawableLeft="@drawable/ic_baseline_fastfood_24"
+        android:gravity="center"
+        android:paddingLeft="32dp"
+        android:paddingRight="20dip"
+        android:textColor="@color/ltblack"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/TimetableButton" />
+
+    <Button
+        android:id="@+id/TimetableButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toEndOf="@+id/timetableMealsList"
+        android:backgroundTint="@color/ltorange"
+        android:textColor="@color/ltblack"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:paddingLeft="32dp"
+        android:paddingRight="20dip"
+        android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/MealsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toEndOf="@+id/timetableMealsList"
+        android:backgroundTint="@color/ltorange"
+        android:drawableLeft="@drawable/ic_baseline_set_meal_24"
+        android:gravity="center"
+        android:paddingLeft="32dp"
+        android:paddingRight="20dip"
+        android:textColor="@color/ltblack"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ProductsButton" />
+
+    <Button
+        android:id="@+id/AccountButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toEndOf="@+id/timetableMealsList"
+        android:backgroundTint="@color/ltorange"
+        android:drawableLeft="@drawable/ic_baseline_account_box_24"
+        android:gravity="center"
+        android:paddingLeft="32dp"
+        android:paddingRight="20dip"
+        android:textColor="@color/ltblack"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/MealsButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
