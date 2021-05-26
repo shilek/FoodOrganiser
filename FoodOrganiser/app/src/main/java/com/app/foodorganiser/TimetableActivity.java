@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -56,6 +57,7 @@ public class TimetableActivity extends AppCompatActivity {
         //kalendarz do klikania
         CalendarView calendarView=(CalendarView) findViewById(R.id.calendar);
         menuLoaded = false;
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
@@ -70,11 +72,6 @@ public class TimetableActivity extends AppCompatActivity {
                 productList.setAdapter(productsListAdapter);
                 countMacros(breakfast);
                 setMacroText();
-//                breakfast.add(new ProductTable(3, "milk", 20, 0, 3, "123milk", null));
-//                breakfast.add(new ProductTable(4,"yoghurt", 10, 7, 5, "123yogh", null));
-//                lunch.add(new ProductTable(5, "peanut butter", 10, 30, 100, "peanut123", null));
-//                saveMenu(date);
-//                Toast.makeText(getApplicationContext(), breakfast.get(0).getName(), Toast.LENGTH_SHORT).show();// TODO Auto-generated method stub
             }
         });
 
@@ -89,6 +86,7 @@ public class TimetableActivity extends AppCompatActivity {
                     productList.setAdapter(productsListAdapter);
                     countMacros(breakfast);
                     setMacroText();
+
                 }
                 if (position == 1){
                     selectedMeal = "breakfast2";
@@ -121,18 +119,17 @@ public class TimetableActivity extends AppCompatActivity {
             }
         });
 
-
         addIngredientButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, PickIngredient.class);
             intent.putExtra("action", "addToTimetable");
             intent.putExtra("selectedMeal", selectedMeal);
             startActivity(intent);
         });
-
     }
 
     public void loadMenu(String date){
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.app.foodorganiser."+date, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getApplicationContext()
+                .getSharedPreferences("com.app.foodorganiser." + date, Context.MODE_PRIVATE);
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<ProductTable>>() {}.getType();
 
@@ -165,7 +162,8 @@ public class TimetableActivity extends AppCompatActivity {
     }
 
     public void saveMenu(String date){
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.app.foodorganiser."+date, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getApplicationContext()
+                .getSharedPreferences("com.app.foodorganiser." + date, Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(breakfast);
@@ -182,10 +180,10 @@ public class TimetableActivity extends AppCompatActivity {
         prefsEditor.commit();
     }
 
-    static public void countMacros(List<ProductTable> list){
+     static public void countMacros(List<ProductTable> list){
         double carbo = 0, protein = 0, fats = 0;
-        if(list.size() > 0)
-        for(int i=0; i < list.size(); i++){
+        if (list.size() > 0)
+        for (int i = 0; i < list.size(); i++) {
             carbo += list.get(i).getCarbohydrates();
             protein += list.get(i).getProtein();
             fats += list.get(i).getFats();
@@ -197,8 +195,9 @@ public class TimetableActivity extends AppCompatActivity {
     }
 
     static public void setMacroText(){
-        macroInfo.setText("Protein: "+countedMacros.get(0)+"  Carbo: "+countedMacros.get(1)+"  Fats: "+countedMacros.get(2));
+        macroInfo.setText("Protein: " + countedMacros.get(0) + "  Carbo: " + countedMacros.get(1) + "  Fats: " + countedMacros.get(2));
     }
+
     @Override
     public void onBackPressed() {
         if(menuLoaded) saveMenu(date);

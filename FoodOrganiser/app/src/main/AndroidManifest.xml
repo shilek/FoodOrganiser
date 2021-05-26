@@ -13,7 +13,7 @@
         android:theme="@style/Theme.FoodOrganiser">
         <activity android:name=".PickIngredient"></activity>
         <activity android:name=".CreateMeal" />
-        <activity android:name=".Meals" />
+        <activity android:name=".MealsActivity" />
         <activity android:name=".productpackage.ProductDisplay" />
         <activity android:name=".TimetableActivity" />
         <activity android:name=".MainActivity">

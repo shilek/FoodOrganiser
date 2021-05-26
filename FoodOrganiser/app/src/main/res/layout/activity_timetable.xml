@@ -26,39 +26,39 @@
 
     <CalendarView
         android:id="@+id/calendar"
-        android:layout_width="398dp"
-        android:layout_height="246dp"
+        android:layout_width="wrap_content"
+        android:layout_height="305dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp" />
+        android:layout_marginEnd="9dp" />
 
     <ListView
         android:id="@+id/timetableMealsList"
         android:layout_width="100dp"
-        android:layout_height="match_parent"
+        android:layout_height="397dp"
         android:layout_below="@+id/calendar"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:background="@android:color/white"
+        android:choiceMode="singleChoice"
+        android:listSelector="@android:color/darker_gray"
         app:layout_constraintStart_toEndOf="@id/calendar"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </ListView>
+        app:layout_constraintTop_toTopOf="parent"></ListView>
 
     <ListView
         android:id="@+id/timetableProductsList"
-        android:layout_width="278dp"
-        android:layout_height="366dp"
+        android:layout_width="275dp"
+        android:layout_height="313dp"
         android:layout_above="@+id/addIngredientTimetable"
         android:layout_below="@+id/calendar"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="0dp"
         android:layout_toEndOf="@+id/timetableMealsList"
         app:layout_constraintStart_toEndOf="parent">

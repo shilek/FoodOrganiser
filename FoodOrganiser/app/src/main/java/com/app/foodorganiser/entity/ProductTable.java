@@ -66,10 +66,10 @@ public class ProductTable {
     {
         List<ProductTable> productTable = new ArrayList<>();
         ProductTable temp;
-        for(int i=0;i<list.size();i++)
+        for(int i = 0; i < list.size(); i++)
         {
             temp = ProductTable.toObject(list.get(i));
-            if(temp!=null) {
+            if(temp != null) {
                 productTable.add(temp);
             }
         }
