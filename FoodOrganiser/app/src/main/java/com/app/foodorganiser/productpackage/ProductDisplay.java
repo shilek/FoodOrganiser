@@ -23,7 +23,6 @@ public class ProductDisplay extends AppCompatActivity implements ProductListener
     RecyclerView.LayoutManager layoutManager;
     SearchView searchView;
     ProductAdapter productAdapter;
-    Button addProductButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +30,21 @@ public class ProductDisplay extends AppCompatActivity implements ProductListener
 
         if (MainActivity.allProductsList != null && MainActivity.allProductsList.size() > 0)
         {
+            new Thread(() -> {
+                List<String> list;
+                String string;
+                DatabaseClass db = new  DatabaseClass();
+                try {
+                    db.openConnection();
+                    db.sendQuery(QueryBuilder.buildQuery("SELECT * FROM products_table"));
+                    string = db.receiveReply();
+                    list = QueryBuilder.toList(string);
+                    MainActivity.allProductsList = ProductTable.toObject(list);
+                }
+                catch (Exception ignore) {
+                }
+            }).start();
+
             list = MainActivity.allProductsList;
             setContentView(R.layout.activity_product_layout);
             layoutManager = new LinearLayoutManager(this);
@@ -39,12 +53,6 @@ public class ProductDisplay extends AppCompatActivity implements ProductListener
             productAdapter = new ProductAdapter(MainActivity.allProductsList,this);
             recyclerView.setAdapter(productAdapter);
             recyclerView.setLayoutManager(layoutManager);
-            addProductButton = findViewById(R.id.add_pr_button);
-
-            addProductButton.setOnClickListener(v -> {
-                Intent intent = new Intent(this, AddProductActivity.class);
-                startActivity(intent);
-            });
 
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -58,6 +66,7 @@ public class ProductDisplay extends AppCompatActivity implements ProductListener
                     return false;
                 }
             });
+
         }
         else
         {

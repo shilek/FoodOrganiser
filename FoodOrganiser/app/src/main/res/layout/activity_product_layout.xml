@@ -14,30 +14,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productDisplay"
         android:layout_width="match_parent"
-        android:layout_height="555dp"
-        android:layout_above="@+id/add_pr_button"
+        android:layout_height="match_parent"
         android:layout_below="@+id/search_bar"
-        android:layout_marginHorizontal="0dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/white" />
-
-    <Button
-        android:id="@+id/add_pr_button"
-        android:layout_width="92dp"
-        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginVertical="8dp"
-        android:layout_marginStart="155dp"
-        android:layout_marginEnd="155dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/ltorange"
-        android:drawableLeft="@drawable/ic_add"
-        android:gravity="center"
-        android:textColor="@color/ltblack"
-        android:textSize="30sp" />
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/white" />
 
     <Space
         android:layout_width="wrap_content"

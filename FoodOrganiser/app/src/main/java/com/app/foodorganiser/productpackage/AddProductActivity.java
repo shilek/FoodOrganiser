@@ -35,14 +35,21 @@ public class AddProductActivity extends AppCompatActivity {
         codeBox = findViewById(R.id.code_et);
         confirm = findViewById(R.id.confirm_button);
 
+
         confirm.setOnClickListener(v -> {
             getValues();
-            new Thread(() -> {
-                DatabaseClass db = new  DatabaseClass();
-                db.openConnection();
-                ProductTable productObject = new ProductTable(-1, name, proteins, carbos, fats, code, null);
-                db.sendQuery(QueryBuilder.insert(productObject));
-            }).start();
+            try {
+                new Thread(()-> {
+                    DatabaseClass db = new  DatabaseClass();
+                    ProductTable productObject = new ProductTable(-1, name, proteins, carbos, fats, code, null);
+                    db.openConnection();
+                    db.sendQuery(QueryBuilder.buildQuery(QueryBuilder.insert(productObject)));
+                    db.receiveReply();
+                }).start();
+            }
+            catch (Exception ignore) {
+                ignore.printStackTrace();
+            }
             this.finish();
         });
     }

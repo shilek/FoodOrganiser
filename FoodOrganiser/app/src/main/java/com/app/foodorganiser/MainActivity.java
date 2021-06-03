@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.foodorganiser.entity.ProductTable;
+import com.app.foodorganiser.productpackage.AddProductActivity;
 import com.app.foodorganiser.productpackage.DatabaseClass;
 import com.app.foodorganiser.productpackage.ProductDisplay;
 import com.app.foodorganiser.productpackage.QueryBuilder;
@@ -141,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         account.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, ProductDisplay.class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, AddProductActivity.class);
+            startActivity(intent);
         });
 
         mealList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
