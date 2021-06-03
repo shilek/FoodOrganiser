@@ -66,14 +66,19 @@ public class ProductTable {
     {
         List<ProductTable> productTable = new ArrayList<>();
         ProductTable temp;
-        for(int i = 0; i < list.size(); i++)
+        if(list!=null && list.size()>0)
         {
-            temp = ProductTable.toObject(list.get(i));
-            if(temp != null) {
-                productTable.add(temp);
+            for(int i=0;i<list.size();i++)
+            {
+                temp = ProductTable.toObject(list.get(i));
+                if(temp!=null) {
+                    productTable.add(temp);
+                }
             }
+            return productTable;
         }
-        return productTable;
+        return null;
+
     }
 
     public String getName() {

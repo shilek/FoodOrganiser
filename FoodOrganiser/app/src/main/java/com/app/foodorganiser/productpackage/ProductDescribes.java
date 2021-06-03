@@ -21,9 +21,9 @@ public class ProductDescribes extends AppCompatDialogFragment {
         String [] values = new String[3];
 
         if(bundle!=null) {
-            values[0] = "Proteins: " + bundle.getInt("protein");
-            values[1] = "Carbohydrates: " + bundle.getInt("carbohydrates");
-            values[2] = "Fats: " + bundle.getInt("fats");
+            values[0] = "Proteins: " + bundle.getDouble("protein");
+            values[1] = "Carbohydrates: " + bundle.getDouble("carbohydrates");
+            values[2] = "Fats: " + bundle.getDouble("fats");
 
             @SuppressLint("InflateParams")
             View view =  LayoutInflater.from(getActivity()).inflate(R.layout.activity_popup_product,null);

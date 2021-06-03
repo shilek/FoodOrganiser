@@ -28,7 +28,7 @@ public class DatabaseClass {
 
     //TODO: placeholder
     public DatabaseClass() {
-        DATABASE = "http://192.168.100.7/projectAndroid/web/index.php"; //put in your local IP
+        DATABASE = "http://192.168.0.165/projectAndroid/web/index.php"; //put in your local IP
         USER = "root";
         PASS = "";
     }
@@ -50,7 +50,7 @@ public class DatabaseClass {
         }
     }
 
-    public void sendQuery(String query) {
+    public boolean sendQuery(String query) {
         try {
             OutputStream outputStream = connection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream)));
@@ -58,9 +58,11 @@ public class DatabaseClass {
             bufferedWriter.flush();
             bufferedWriter.close();
             outputStream.close();
+            return true;
         } catch (IOException e) {
-            Log.wtf("Connect", e);
             e.printStackTrace();
+            return false;
+
         }
     }
 

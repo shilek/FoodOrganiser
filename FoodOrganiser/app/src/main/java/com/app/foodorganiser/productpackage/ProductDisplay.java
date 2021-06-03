@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.widget.SearchView;
 
+import com.app.foodorganiser.MainActivity;
 import com.app.foodorganiser.R;
 import com.app.foodorganiser.adapters.ProductAdapter;
 import com.app.foodorganiser.entity.ProductTable;
@@ -19,29 +21,42 @@ public class ProductDisplay extends AppCompatActivity implements ProductListener
     RecyclerView.LayoutManager layoutManager;
     SearchView searchView;
     ProductAdapter productAdapter;
-    DatabaseClass database;
-    ProductDAO dao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_layout);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView = findViewById(R.id.productDisplay);
-        searchView = findViewById(R.id.search_bar);
+        if(MainActivity.allProductsList!=null && MainActivity.allProductsList.size()>0)
+        {
+            list = MainActivity.allProductsList;
+            setContentView(R.layout.activity_product_layout);
+            layoutManager = new LinearLayoutManager(this);
+            recyclerView = findViewById(R.id.productDisplay);
+            searchView = findViewById(R.id.search_bar);
+            productAdapter = new ProductAdapter(MainActivity.allProductsList,this);
+            recyclerView.setAdapter(productAdapter);
+            recyclerView.setLayoutManager(layoutManager);
 
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                productAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    productAdapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+        }
+        else
+        {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Error");
+            dialog.setMessage("Something is not quite right");
+            dialog.setPositiveButton("OK", (dialog1, which) -> ProductDisplay.this.finish());
+            dialog.show();
+        }
     }
 
 
