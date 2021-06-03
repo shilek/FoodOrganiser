@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.app.foodorganiser">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -9,9 +10,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.FoodOrganiser">
-        <activity android:name=".PickIngredient"></activity>
+        android:theme="@style/Theme.FoodOrganiser"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".productpackage.AddProductActivity"></activity>
+        <activity android:name=".PickIngredient" />
         <activity android:name=".CreateMeal" />
         <activity android:name=".MealsActivity" />
         <activity android:name=".productpackage.ProductDisplay" />
@@ -23,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".AlarmReceiver" />
     </application>
 

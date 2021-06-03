@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.SearchView;
 
 import com.app.foodorganiser.MainActivity;
@@ -15,17 +17,19 @@ import com.app.foodorganiser.entity.ProductTable;
 
 import java.util.List;
 
-public class ProductDisplay extends AppCompatActivity implements ProductListener{
+public class ProductDisplay extends AppCompatActivity implements ProductListener {
     private List<ProductTable> list;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     SearchView searchView;
     ProductAdapter productAdapter;
+    Button addProductButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(MainActivity.allProductsList!=null && MainActivity.allProductsList.size()>0)
+
+        if (MainActivity.allProductsList != null && MainActivity.allProductsList.size() > 0)
         {
             list = MainActivity.allProductsList;
             setContentView(R.layout.activity_product_layout);
@@ -35,6 +39,12 @@ public class ProductDisplay extends AppCompatActivity implements ProductListener
             productAdapter = new ProductAdapter(MainActivity.allProductsList,this);
             recyclerView.setAdapter(productAdapter);
             recyclerView.setLayoutManager(layoutManager);
+            addProductButton = findViewById(R.id.add_pr_button);
+
+            addProductButton.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AddProductActivity.class);
+                startActivity(intent);
+            });
 
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override

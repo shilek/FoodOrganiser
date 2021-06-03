@@ -19,7 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.foodorganiser.adapters.ProductListAdapter;
 import com.app.foodorganiser.entity.ProductTable;
 import com.app.foodorganiser.productpackage.DatabaseClass;
 import com.app.foodorganiser.productpackage.ProductDisplay;
@@ -71,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(allProductsList == null) allProductsList = new ArrayList<>();
+        if (allProductsList == null) allProductsList = new ArrayList<>();
 
-        products = findViewById(R.id.ProductsButton);
+        products = findViewById(R.id.add_pr_button);
         timetable = findViewById(R.id.TimetableButton);
         meals = findViewById(R.id.MealsButton);
         account = findViewById(R.id.AccountButton);
@@ -84,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             List<String> list;
             String string;
             DatabaseClass db = new  DatabaseClass();
-            Looper.prepare();
             try {
                 db.openConnection();
                 db.sendQuery(QueryBuilder.buildQuery("SELECT * FROM products_table"));
@@ -102,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 timetable.setClickable(false);
                 meals.setClickable(false);
                 account.setClickable(false);
+                ignore.printStackTrace();
                 //connect.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
             }
         }).start();
@@ -125,34 +124,6 @@ public class MainActivity extends AppCompatActivity {
         loadMenu();
         //==========================================================================================
 
-
-//        connect.setOnClickListener(v -> {
-//            new Thread(() -> {
-//                List<String> list;
-//                String string;
-//                DatabaseClass db = new  DatabaseClass();
-//                Looper.prepare();
-//                try {
-//                    db.openConnection();
-//                    db.sendQuery(QueryBuilder.buildQuery("SELECT * FROM products_table"));
-//                    string = db.receiveReply();
-//                    list = QueryBuilder.toList(string);
-//                    allProductsList = ProductTable.toObject(list);
-//                    products.setClickable(true);
-//                    timetable.setClickable(true);
-//                    meals.setClickable(true);
-//                    account.setClickable(true);
-//                    connect.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));//setBackgroundColor(Color.GREEN);
-//                }
-//                catch (Exception ignore) {
-//                    products.setClickable(false);
-//                    timetable.setClickable(false);
-//                    meals.setClickable(false);
-//                    account.setClickable(false);
-//                    connect.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-//                }
-//            }).start();
-//        });
 
         products.setOnClickListener(v -> {
             Intent intent = new Intent(this, ProductDisplay.class);
@@ -334,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         loadMenu();
     }

@@ -17,4 +17,6 @@
     <string name="carbohydratesValue">Carbohydrates (g)</string>
     <string name="proteinValue">Proteins (g)</string>
     <string name="fatValue">Fats (g)</string>
+    <string name="product">Product</string>
+    <string name="code">Code</string>
 </resources>
