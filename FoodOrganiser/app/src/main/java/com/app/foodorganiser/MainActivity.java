@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
     public void loadMenu() {
 
         LocalDate localDate = LocalDate.now().minusMonths(1);
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.M.yyyy");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("d.M.yyyy");
         String date = localDate.format(dateFormat);
 
         SharedPreferences sharedPreferences = getApplicationContext()
@@ -289,20 +289,6 @@ public class MainActivity extends AppCompatActivity {
         targetList.add(carbo);
         targetList.add(fats);
         return targetList;
-    }
-
-    public void toast(String string) {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_toast,
-                (ViewGroup) findViewById(R.id.custom_toast_container));
-
-        TextView text = layout.findViewById(R.id.text);
-        text.setText(string);
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.show();
     }
 
     @Override

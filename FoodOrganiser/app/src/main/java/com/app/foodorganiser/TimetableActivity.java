@@ -79,7 +79,7 @@ public class TimetableActivity extends AppCompatActivity {
         macroInfo = findViewById(R.id.macroInfo);
         mealsListAdapter = new ArrayAdapter<>(this, R.layout.custom_meals_list, R.id.textView1, meals);
         //kalendarz do klikania
-        CalendarView calendarView=(CalendarView) findViewById(R.id.calendar);
+        CalendarView calendarView = (CalendarView) findViewById(R.id.calendar);
         menuLoaded = false;
         loadTime();
         if(checked != null)
